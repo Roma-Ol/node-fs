@@ -1,4 +1,5 @@
-const fs = require('fs/promises');
+const { readFile, readdir } = require('fs/promises');
+const { resolve: pathResolve, join: pathJoin } = require('path');
 
 /**
  * Read and Parse a number from a file.
@@ -7,8 +8,10 @@ const fs = require('fs/promises');
  * @returns {Promise<number>}
  */
 const readAndParseFile = async (path) => {
-  const data = await fs.readFile(path, 'utf-8');
+  const data = await readFile(path, 'utf-8');
   const num = parseFloat(data);
+
+  console.log({path: path});
 
   if (isNaN(num)) throw new Error('File should contain a valid numeral!');
 
@@ -22,8 +25,8 @@ const readAndParseFile = async (path) => {
  */
 const calculate = async () => {
   try {
-    const num1 = await readAndParseFile('./a.txt');
-    const num2 = await readAndParseFile('./b.txt');
+    const num1 = await readAndParseFile(pathResolve('a.txt'));
+    const num2 = await readAndParseFile(pathResolve('b.txt'));
     const sum = num1 + num2;
 
     console.log(`${num1} + ${num2} = ${sum}`);
