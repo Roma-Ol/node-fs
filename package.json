@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon lesson-3-mongoose/server.js"
   },
   "author": "Roman Oliievskyi",
   "license": "ISC",
@@ -16,6 +16,7 @@
   "dependencies": {
     "express": "^4.19.2",
     "joi": "^17.12.3",
+    "mongoose": "^8.3.2",
     "morgan": "^1.10.0",
     "uuid": "^9.0.1"
   }
