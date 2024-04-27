@@ -1,13 +1,16 @@
 const express = require('express');
 const app = express();
-const usersRouter = require('../routes/');
+const userRouter = require('../routes/userRoutes');
+const movieRouter = require('../routes/movieRoutes');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 dotenv.config();
 
 app.use(express.json());
 app.use(morgan('tiny'));
-app.use('/', usersRouter);
+
+app.use('/user', userRouter);
+app.use('/movie', movieRouter);
 
 // Centralized requests error handler.
 app.use((err, req, res, next) => {

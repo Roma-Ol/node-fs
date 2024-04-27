@@ -3,17 +3,8 @@
  * returns the updated entity from controller.
  */
 const { join: pathJoin } = require('path');
-const { User } = require('../models/usersModel');
-
-const verifyUserExists = async (userId) => {
-  const user = await User.exists({ _id: userId });
-
-  if (!user) {
-    const error = new Error(`User with ID ${userId} not found`);
-    error.statusCode = 404;
-    throw error;
-  }
-};
+const { User } = require('../models');
+const { verifyEntityExists } = require('../utils/verifyEntityExists');
 
 const getAllUsers = async () => {
   const allUsers = await User.find();
@@ -22,7 +13,7 @@ const getAllUsers = async () => {
 };
 
 const getUserById = async (userId) => {
-  await verifyUserExists(userId);
+  await verifyEntityExists(userId, User);
   const selectedUser = await User.findById(userId);
 
   return selectedUser;
@@ -38,14 +29,14 @@ const createUser = async (userData) => {
 };
 
 const updateUser = async (userId, newUserData) => {
-  await verifyUserExists(userId);
+  await verifyEntityExists(userId, User);
   const updatedUser = User.findByIdAndUpdate(userId, newUserData, { new: true });
 
   return updatedUser;
 };
 
 const deleteUser = async (userId) => {
-  await verifyUserExists(userId);
+  await verifyEntityExists(userId, User);
   await User.findByIdAndDelete(userId);
   return;
 };
