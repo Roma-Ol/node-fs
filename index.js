@@ -11,8 +11,6 @@ const readAndParseFile = async (path) => {
   const data = await readFile(path, 'utf-8');
   const num = parseFloat(data);
 
-  console.log({path: path});
-
   if (isNaN(num)) throw new Error('File should contain a valid numeral!');
 
   return num;
