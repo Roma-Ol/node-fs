@@ -12,10 +12,16 @@ const userSchema = new Schema({
     required: true,
     min: 0,
   },
-  favorite_color: {
+  phone: {
     type: String,
     required: true,
     trim: true,
+    validate: {
+      validator: function(v) {
+        return /^(?:\+38)?0\d{9}$/.test(v);
+      },
+      message: props => `${props.value} is not a valid Ukrainian phone number!`
+    }
   },
   email: {
     type: String,
@@ -29,4 +35,4 @@ const userSchema = new Schema({
 
 const User = mongoose.model('User', userSchema);
 
-module.exports = { User };
+module.exports = User;

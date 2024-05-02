@@ -1,6 +1,3 @@
-/**
- * All the routes + their middlewares.
- */
 const express = require('express');
 const router = express.Router();
 const {
@@ -9,7 +6,7 @@ const {
   createUserHandler,
   updateUserHandler,
   deleteUserByIdHandler
-} = require('../controllers');
+} = require('../controllers/userControllers');
 const { validateUserCreate, validateUserUpdate } = require('../middlewares/userValidate');
 
 router.get('/', getAllUsersHandler);

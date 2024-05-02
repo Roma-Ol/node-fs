@@ -1,17 +1,10 @@
-/**
- * Basically the wrappers for CRUD operations.
- * It handles the HTTP-specific tasks such as getting the user Input data and
- * returns the updated entity.
- *
- * Each controller here is a middleware.
- */
 const {
   getAllUsers,
   getUserById,
   createUser,
   updateUser,
   deleteUser,
-} = require('../services');
+} = require('../services/userServices');
 
 const getAllUsersHandler = async (req, res, next) => {
   try {
@@ -26,10 +19,6 @@ const getUserByIdHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
     const selectedUser = await getUserById(id);
-
-    selectedUser
-      ? console.log('success')
-      : console.log('error');
 
     res.status(200).send(selectedUser);
   } catch (err) {
