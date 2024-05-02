@@ -9,7 +9,8 @@ const connectDB = async () => {
     console.log('Database connection successful');
   } catch (err) {
     throw new Error('Failed to connect to database: ' + err);
+    process.exit(1);
   }
-}
+};
 
 module.exports = { connectDB };

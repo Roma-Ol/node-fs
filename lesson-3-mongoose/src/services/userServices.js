@@ -21,8 +21,8 @@ const getUserById = async (userId) => {
 
 const createUser = async (userData) => {
   // Check if email fields is unique.
-  const emailIsUnique = await User.findOne({ email: userData.email });
-  if (!!emailIsUnique) throw new Error(`User with this email (${userData.email}) already exists!`);
+  const userExists = await User.findOne({ email: userData.email });
+  if (!!userExists) throw new Error(`User with this email (${userData.email}) already exists!`);
 
   const newUser = await User.create(userData);
   return newUser;
@@ -38,7 +38,6 @@ const updateUser = async (userId, newUserData) => {
 const deleteUser = async (userId) => {
   await verifyEntityExists(userId, User);
   await User.findByIdAndDelete(userId);
-  return;
 };
 
 module.exports = { getAllUsers, getUserById, createUser, updateUser, deleteUser };
