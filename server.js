@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const usersRouter = require('./src/routes/index');
 const morgan = require('morgan')
+const { statusCode } = require('./src/utils/constants')
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -11,20 +12,21 @@ app.use(express.json());
 app.use(morgan('dev'));
 app.use('/', usersRouter);
 
-// Centralized requests error handler.
-app.use((err, req, res, next) => {
-  res.status(err.statusCode || 500).json({
+// 404 request Handler.
+app.use((req, res, next) => {
+  res.status(statusCode.NOT_FOUND).json({
     status: 'error',
-    message: err.message || 'Internal Server Error'
+    code: statusCode.NOT_FOUND,
+    message: 'Not Found'
   });
 });
 
-// 404 request Handler.
-app.use((req, res, next) => {
-  res.status(404).json({
+
+// Centralized requests error handler.
+app.use((err, req, res, next) => {
+  res.status(err.statusCode || statusCode.INTERNAL_SERVER_ERROR).json({
     status: 'error',
-    code: 404,
-    message: 'Not Found'
+    message: err.message || 'Internal Server Error'
   });
 });
 

@@ -6,7 +6,7 @@ const { readFile, writeFile } = require('fs/promises');
 const { join: pathJoin } = require('path');
 const { updateUserStorage } = require('../utils/updateUserStorage');
 const { v4: uuidv4 } = require('uuid');
-
+const { statusCode } = require('../utils/constants');
 const userStoragePath = pathJoin(__dirname, '../models/users.json');
 
 const verifyUserExists = async (userId) => {
@@ -15,7 +15,7 @@ const verifyUserExists = async (userId) => {
 
   if (!user) {
     const error = new Error(`User with ID ${userId} not found`);
-    error.statusCode = 404;
+    error.statusCode = statusCode.NOT_FOUND;
     throw error;
   }
 };
