@@ -8,7 +8,7 @@ const getAllMovies = async () => {
 };
 
 const getMovieById = async (movieId) => {
-  await verifyEntityExists(movieId, Movie);
+  await verifyEntityExists({ _id: movieId }, Movie, 'Movie with this ID doesn\'t exist');
   const selectedMovie = await Movie.findById(movieId);
 
   return selectedMovie;

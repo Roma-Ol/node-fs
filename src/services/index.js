@@ -60,4 +60,4 @@ const deleteUser = async (userId) => {
   return updatedUserList;
 };
 
-module.exports = { getAllUsers, getUserById, createUser, updateUser, deleteUser };
+module.exports = { getAllUsers, getUserById, updateUser, deleteUser };
