@@ -5,6 +5,7 @@ const movieRouter = require('../routes/movieRoutes');
 const authRouter = require('../routes/authRoutes');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
+const { statusCode } = require('../utils/constants');
 dotenv.config();
 
 app.use(express.json());
@@ -24,7 +25,7 @@ app.use((err, req, res, next) => {
 
 // 404 request Handler.
 app.use((req, res, next) => {
-  res.status(404).json({
+  res.status(statusCode.NOT_FOUND).json({
     status: 'error',
     code: 404,
     message: 'Not Found',

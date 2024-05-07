@@ -41,10 +41,10 @@ const addMovieToFavorite = async (userId, movieId) => {
   const updatedUser = await User.findByIdAndUpdate(
     userId,
     { $addToSet: { favoriteMovies: movieId } },
-    { new: true, safe: true, upsert: false }, // options
+    { new: true, safe: true, upsert: false },
   ).populate('favoriteMovies');
 
-  return updatedUser;
+  return updatedUser.favoriteMovies;
 };
 
 const getFavoriteMovies = async (userId) => {
