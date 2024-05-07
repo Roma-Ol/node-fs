@@ -1,8 +1,14 @@
 const mongoose = require('mongoose');
 const { Schema } = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const userSchema = new Schema({
-  name: {
+  firstName: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  lastName: {
     type: String,
     required: true,
     trim: true,
@@ -12,16 +18,10 @@ const userSchema = new Schema({
     required: true,
     min: 0,
   },
-  phone: {
+  phone_number: {
     type: String,
     required: true,
     trim: true,
-    validate: {
-      validator: function(v) {
-        return /^(?:\+38)?0\d{9}$/.test(v);
-      },
-      message: props => `${props.value} is not a valid Ukrainian phone number!`
-    }
   },
   email: {
     type: String,
@@ -31,7 +31,23 @@ const userSchema = new Schema({
     lowercase: true,
     match: [/.+\@.+\..+/, 'Please fill a valid email address'],
   },
+  password: {
+    type: String,
+    required: true,
+    min: 6,
+  },
+  favoriteMovies: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Movie'
+  }]
 }, { timestamps: { createdAt: 'created_at' } });
+
+userSchema.pre('save', async function() {
+  if (this.$isNew) {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  }
+});
 
 const User = mongoose.model('User', userSchema);
 

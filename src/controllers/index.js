@@ -8,7 +8,6 @@
 const {
   getAllUsers,
   getUserById,
-  createUser,
   updateUser,
   deleteUser,
 } = require('../services');

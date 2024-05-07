@@ -27,7 +27,6 @@ const validateUserCreate = (req, res, next) => {
 };
 
 const validateUserUpdate = (req, res, next) => {
-  console.log(req.body);
   const { error } = updateUserSchema.validate(req.body);
 
   if (error) return res.status(statusCode.BAD_REQUEST).json({ error: error.details[0].message });
