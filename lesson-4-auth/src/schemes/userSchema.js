@@ -26,28 +26,14 @@ const updateUserSchema = Joi.object({
   password: Joi.string().min(6).max(18).required(),
 }).or('firstName', 'lastName', 'age', 'phone_number', 'email');  // Require at least one of these fields
 
-const validateUserCreate = (req, res, next) => {
-  const { error } = createUserSchema.validate(req.body);
+const resendVerificationSchema = Joi.object({
+  email: Joi.string().required().email().message('Email must be a valid email address'),
+});
 
-  if (error) return res.status(400).json({ error: error.details[0].message });
+const resetPasswordSchema = Joi.object({
+  email: Joi.string().required().email().message('Email must be a valid email address'),
+  oldPassword: Joi.string().min(6).max(18).required(),
+  newPassword: Joi.string().min(6).max(18).required(),
+});
 
-  next();
-};
-
-const validateUserLogin = (req, res, next) => {
-  const { error } = loginUserSchema.validate(req.body);
-
-  if (error) return res.status(400).json({ error: error.details[0].message });
-
-  next();
-};
-
-const validateUserUpdate = (req, res, next) => {
-  const { error } = updateUserSchema.validate(req.body);
-
-  if (error) return res.status(400).json({ error: error.details[0].message });
-
-  next();
-};
-
-module.exports = { validateUserCreate, validateUserLogin, validateUserUpdate };
+module.exports = { createUserSchema, loginUserSchema, updateUserSchema, resendVerificationSchema, resetPasswordSchema };
